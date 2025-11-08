@@ -73,27 +73,29 @@ class formArticleCreate(forms.ModelForm):
     content = forms.CharField(widget=SummernoteWidget())
     class Meta:
         model = Article
-        fields = ['title', 'created_at', 'slug', 'category', 'content', 'featured_image', 'status']
+        fields = ['title', 'created_at', 'slug', 'category', 'content', 'featured_image', 'status', 'is_headline']
         widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Title (English)'}),
-            'slug': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Slug'}),
-            'category': forms.Select(attrs={'class': 'form-control'}),
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Masukkan Judul Artikel'}),
+            'slug': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Slug/URL Artikel (Boleh dikosongkan)'}),
+            'category': forms.Select(attrs={'class': 'form-control', 'placeholder': 'Pilih Kategori Artikel'}),
             'created_at': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),
             'featured_image': forms.FileInput(attrs={'class': 'form-control'}),
             'status': forms.Select(attrs={'class': 'form-control'}),
+            'is_headline': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
 
 class formArticleEdit(forms.ModelForm):
     content = forms.CharField(widget=SummernoteWidget())
     class Meta:
         model = Article
-        fields = ['title', 'slug', 'category', 'content', 'featured_image', 'status','created_at']
+        fields = ['title', 'slug', 'category', 'content', 'featured_image', 'status','created_at', 'is_headline']
         widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Title (Bahasa Indonesia)'}),
-            'slug': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Slug'}),
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Masukkan Judul Artikel'}),
+            'slug': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Slug/URL Artikel (Boleh dikosongkan)'}),
             'category': forms.Select(attrs={'class': 'form-control'}),
             'created_at': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),
             'featured_image': forms.FileInput(attrs={'class': 'form-control'}),
             'status': forms.Select(attrs={'class': 'form-control'}),
+            'is_headline': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
 

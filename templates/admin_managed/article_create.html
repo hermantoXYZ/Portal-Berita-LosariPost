@@ -104,6 +104,14 @@
                     </div>
                 {% endif %}
              </div>
+            <div class="form-check">
+                {{ form.is_headline }}
+                <label class="form-check-label" for="{{ form.is_headline.id_for_label }}">
+                    Tampilkan di Headline
+                </label>
+            </div> 
+            
+            
 
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">

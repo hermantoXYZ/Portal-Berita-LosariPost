@@ -125,6 +125,7 @@ def rename_featured_image(instance, filename):
     new_filename = f"{title_slug}_{timestamp}.{ext}"
     return os.path.join('articles/featured_images/', new_filename)
 
+
 class Article(models.Model):
 
     STATUS_CHOICES = (
@@ -135,11 +136,13 @@ class Article(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True, blank=True)
+    unique_id = models.CharField(max_length=7, unique=True, editable=False, blank=True)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='articles')
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name='articles')
     content = models.TextField()
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
     featured_image = models.ImageField(upload_to=rename_featured_image, blank=True, null=True)
+    is_headline = models.BooleanField(default=False, verbose_name='Tampilkan di Headline')
     views_count = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
@@ -150,6 +153,8 @@ class Article(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)
+        if not self.unique_id:
+            self.unique_id = uuid.uuid4().hex[:7]
         super().save(*args, **kwargs)
 
     def __str__(self):

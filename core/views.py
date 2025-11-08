@@ -17,10 +17,7 @@ def custom_404(request, exception):
 def index(request):
     # Ambil semua artikel yang published
     all_articles = Article.objects.filter(status='published').order_by('-created_at')
-    # all_seminat_ujian = JadwalSeminarUjian.objects.filter(status='dijadwalkan').order_by('tanggal', 'waktu')
-    # all_events = Events.objects.all().order_by('tanggal_pelaksanaan', 'waktu_pelaksanaan')
-    # all_wisuda = Wisuda.objects.all().order_by('-tanggal_wisuda', '-ipk')[:10]
-    # Pagination - 6 artikel per halaman
+    headline_articles = Article.objects.filter(is_headline=True, status='published').order_by('-created_at')[:3]
     paginator = Paginator(all_articles, 6)
     page = request.GET.get('page')
     
@@ -39,12 +36,14 @@ def index(request):
         'article_list': articles,
         'featured_article': featured_article,
         'paginator': paginator,
+        'headline_articles': headline_articles,
     }
     return render(request,'home/index.html', context) 
 
 
-def article_detail(request, slug):
-    article = get_object_or_404(Article, slug=slug)
+def article_detail(request, slug, category_slug, unique_id):
+    # article = get_object_or_404(Article, slug=slug)
+    article = get_object_or_404(Article, unique_id=unique_id, slug=slug, category__slug=category_slug)
     category_list_variabel = Category.objects.all()
     popular_articles = Article.objects.filter(status='published').order_by('-views_count')[:3]
     article.views_count += 1

@@ -10,203 +10,131 @@
     <meta name="google" content="notranslate">
 {% endblock %}
 {% block content %}
-<!-- <h1>{{ article.title }}</h1>
-<img src="{{ article.featured_image.url }}" alt="{{ article.title }}">
-<div>{{ article.content|safe }}</div> -->
- <!-- Breadcrumb Navigation -->
- <nav class="breadcrumb">
-    <div class="breadcrumb-container">
-        <div class="breadcrumb-nav">
-            <a href="#">Home</a>
-            <i class="fas fa-chevron-right"></i>
-            <a href="{% url 'category_articles' article.category.slug %}">{{ article.category }}</a>
-            <i class="fas fa-chevron-right"></i>
-            <span class="current">{{ article.title|truncatechars:20 }}</span>
-        </div>
-    </div>
-</nav>
+<main class="main-grid">
+            <div class="main-content">
+                <article class="article-detail">
+                    <h2>{{ article.title }}</h2>
+                    <div class="article-meta">
+                        <span>Oleh: {{ article.author.username }}</span> | <span> {{ article.created_at|date:'d F Y' }}</span> | <span>{{ article.views_count }} views</span> | <span>{{ article.content|wordcount }} Characters</span> 
+                    </div>
+                    <img src="{{ article.featured_image.url }}" alt="{{ article.title }}" class="article-image">
+                    <div class="article-content">
+                    {{ article.content|safe }}  
+                    </div>
+                </article>
 
-<div class="container">
-    <!-- Main Article -->
-    <article class="main-article">
-        <div class="article-header">
-            <img src="{{ article.featured_image.url }}" alt="{{ article.title }}" class="article-image">
-            <a href="{% url 'category_articles' article.category.slug %}" class="category-badge">{{ article.category }}</a>
-        </div>
+                <section class="related-articles">
+                    <h2>ARTIKEL TERKAIT</h2>
+                    <div class="related-articles-grid">
+                        <article class="related-article-item">
+                            <img src="https://faktasulsel.com/media/articles/featured_images/anggota-dprd-kota-makassar-mesakh-raymond-rantepadang-gelar-so_VoptIsI.jpeg" alt="Terkait 1">
+                            <h3>Perkuat Kemandirian Pangan Lutim, Bupati Irwan Dukung Program Cetak Sawah</h3>
+                        </article>
+                        <article class="related-article-item">
+                            <img src="https://faktasulsel.com/media/articles/featured_images/bupati-lutim-hadiri-peresmian-gedung-baru-mapolsek-nuha-ka_3kS2O5c.jpeg" alt="Terkait 2">
+                            <h3>Honda Rayakan Penjualan 35 Ribu Unit Brio di Sulsel</h3>
+                        </article>
+                        <article class="related-article-item">
+                            <img src="https://faktasulsel.com/media/articles/featured_images/ketua-dprd-lutra-hadiri-musrenbang-rpjpd-2025-2045-di-map_03O2j2w.jpeg" alt="Terkait 3">
+                            <h3>Makassar Raih Penghargaan Kep Daerah dengan Kinerja Terbaik</h3>
+                        </article>
+                    </div>
+                </section>
 
-        <div class="article-content">
-            <h1 class="article-title-view">{{ article.title }}</h1>
-            
-            <div class="article-meta">
-                <div class="meta-item">
-                    <i class="far fa-calendar"></i>
-                    <span>{{ article.created_at|date:'d F Y' }}</span>
-                </div>
-                <div class="meta-item">
-                    <i class="far fa-user"></i>
-                    <span>{{ article.author }}</span>
-                </div>
-                <div class="meta-item">
-                    <i class="far fa-clock"></i>
-                    <span>{{ article.content|wordcount }} Characters</span>
-                </div>
-                <div class="meta-item">
-                    <i class="far fa-eye"></i>
-                    <span>{{ article.views_count }} views</span>
+                <div class="comments-section">
+                    <h2>Komentar</h2>
+                    <form>
+                        <textarea placeholder="Tulis komentar Anda..."></textarea>
+                        <button type="submit">Kirim</button>
+                    </form>
+                    <div class="comment">
+                        <p><strong>Nama Pengguna:</strong> Komentar contoh.</p>
+                    </div>
                 </div>
             </div>
-
-            <div class="article-body">
-                {{ article.content|safe }}
-            </div>
-            <!-- update at -->
-            <div class="article-meta">
-                <div class="meta-item">
-                    <i class="far fa-clock"></i>
-                    <span>Updated at: {{ article.updated_at|date:'d F Y' }}</span>
-                </div>
-            </div>
-
-            <!-- Share Section -->
-            <div class="share-section">
-                <h3 class="share-title">Share</h3>
-                <div class="share-buttons">
-                    <a href="#" class="share-btn share-facebook" onclick="shareToFacebook()">
-                        <i class="fab fa-facebook-f"></i>
-                        Facebook
-                    </a>
-                    <a href="#" class="share-btn share-twitter" onclick="shareToTwitter()">
-                        <i class="fab fa-twitter"></i>
-                        Twitter
-                    </a>
-                    <a href="#" class="share-btn share-whatsapp" onclick="shareToWhatsApp()">
-                        <i class="fab fa-whatsapp"></i>
-                        WhatsApp
-                    </a>
-                    <a href="#" class="share-btn share-linkedin" onclick="shareToLinkedIn()">
-                        <i class="fab fa-linkedin-in"></i>
-                        LinkedIn
-                    </a>
-                    <a href="#" class="share-btn" onclick="copyLink()">
-                        <i class="fas fa-link"></i>
-                        Copy Link
-                    </a>
-                </div>
-            </div>
-        </div>
-    </article>
-
-    <!-- Sidebar -->
-    <aside class="sidebar">
-        <!-- Latest Articles -->
-        <div class="sidebar-widget">
-            <div class="widget-header">
-                <div class="widget-icon">
-                    <i class="fas fa-link"></i>
-                </div>
-                <h3 class="widget-title">Link Cepat</h3>
-            </div>
-            <div class="category-list">
-                <a href="{% url 'index' %}" class="category-item">
-                    <span>Beranda</span>
-                    <i class="fas fa-home"></i>
-                </a>
-                <a href="{% url 'article_list' %}" class="category-item">
-                    <span>Artikel</span>
-                    <i class="fas fa-flask"></i>
-                </a>
-            </div>
-        </div>
-
-        <div class="sidebar-widget">
-            <div class="widget-header">
-                <div class="widget-icon">
-                    <i class="fas fa-clock"></i>
-                </div>
-                <h3 class="widget-title">Artikel Terbaru</h3>
-            </div>
-            <div class="latest-posts">
+            <aside class="sidebar">
+                <section class="nasional">
+                    <h2>NASIONAL</h2>
+                    <ul>
+                        <li>
+                            <img src="https://faktasulsel.com/media/articles/featured_images/aliyah-mustika-ilham-kolaborasi-media-penting-untuk-umkm-da_mJt2j3g.jpeg" alt="Nasional 1">
+                            <p>Prabowo Pastikan Penertiban Barang Bekas Impor Tak Rugikan UMKM</p>
+                        </li>
+                        <li>
+                            <img src="https://faktasulsel.com/media/articles/featured_images/aliyah-mustika-ilham-kolaborasi-media-penting-untuk-umkm-da_mJt2j3g.jpeg" alt="Nasional 2">
+                            <p>Stasiun Tanah Abang Baru Diresmikan, Simbol Konektivitas Modern Jakarta</p>
+                        </li>
+                        <li>
+                            <img src="https://faktasulsel.com/media/articles/featured_images/aliyah-mustika-ilham-kolaborasi-media-penting-untuk-umkm-da_mJt2j3g.jpeg" alt="Nasional 3">
+                            <p>Prabowo Ungkap Peran Al Perkuat Ketahanan Pangan Indonesia di APEC 2025</p>
+                        </li>
+                    </ul>
+                </section>
+                    <section class="populars">
+                    <h2>POPULERS</h2>
+                    <ol class="popular-list">
+                        {% if popular_articles %}
+                            {% for artikel in popular_articles %}
+                                <li>
+                                    <p>
+                                        <a href="{% url 'article_detail' category_slug=artikel.category.slug unique_id=artikel.unique_id slug=artikel.slug %}">
+                                            {{ artikel.title|truncatechars:80 }}
+                                        </a>
+                                    </p>
+                                </li>
+                            {% endfor %}
+                        {% else %}
+                            <li><p>Tidak ada artikel populer saat ini.</p></li>
+                        {% endif %}
+                    </ol>
+                </section>
+                <section class="latest-news">
+                    <h2>TERBARU</h2>
+                    <ul>
                 {% if latest_articles %}
-                {% for ini_variabel_sementara_artikel in latest_articles %}
-                <article class="latest-post">
-                    <img src="{{ ini_variabel_sementara_artikel.featured_image.url }}" alt="{{ ini_variabel_sementara_artikel.title }}" class="latest-post-image">
-                    <div class="latest-post-content">
-                        <h4 class="latest-post-title">
-                            <a href="{% url 'article_detail' ini_variabel_sementara_artikel.slug %}">{{ ini_variabel_sementara_artikel.title|truncatechars:50 }}</a>
-                        </h4>
-                        <div class="latest-post-date">
-                            <i class="far fa-calendar"></i>
-                            <span>{{ ini_variabel_sementara_artikel.updated_at|date:'d F Y' }}</span>
-                        </div>
-                    </div>
-                </article>
+                {% for terbaru in latest_articles %}
+                        <li>
+                            <img src="{{ terbaru.featured_image.url }}" alt="Daerah 1">
+                            <p><a href="{% url 'article_detail' category_slug=terbaru.category.slug unique_id=terbaru.unique_id slug=terbaru.slug %}">{{ terbaru.title|truncatechars:80 }}</a></p>
+                        </li>
                 {% endfor %}
                 {% endif %}
-                
-            </div>
-        </div>
+                    </ul>
 
-        <div class="sidebar-widget">
-            <div class="widget-header">
-                <div class="widget-icon">
-                    <i class="fas fa-calendar"></i>
-                </div>
-                <h3 class="widget-title">Popular Articles</h3>
-            </div>
-            <div class="latest-posts">
-                {% if popular_articles %}
-                {% for ini_variabel_sementara_artikel in popular_articles %}
-                <article class="latest-post">
-                    <img src="{{ ini_variabel_sementara_artikel.featured_image.url }}" alt="{{ ini_variabel_sementara_artikel.title }}" class="latest-post-image">
-                    <div class="latest-post-content">
-                        <h4 class="latest-post-title">
-                            <a href="{% url 'article_detail' ini_variabel_sementara_artikel.slug %}">{{ ini_variabel_sementara_artikel.title|truncatechars:50 }}</a>
-                        </h4>
-                    </div>
-                </article>
-                {% endfor %}
-                {% endif %}
-            </div>
-        </div>
+                </section>
+                <section class="populars">
+                    <h2>POPULER</h2>
+                    <ol class="popular-list">
+                        <li>
+                            <p>Buka GIIAS Makassar 2025, Munafri Dorong Ekonomi Otomotif Daerah Bertumbuh</p>
+                        </li>
+                        <li>
+                            <p>Sosialisasi Perlindungan Hukum Terhadap Korban Pelecehan Seksual, Isnaniah : Jadilah Pelopor dan Pelapor</p>
+                        </li>
+                        <li>
+                            <p>Edukasi Warga Tallo, DP3A Makassar Ajak Laporkan Kekerasan Seksual ke Lontara+ dan UPTD PPA</p>
+                        </li>
+                        <li>
+                            <p>Munafri Tinjau Lokasi Barombong, Siapkan Solusi Pembebasan Lahan Jembatan Baru</p>
+                        </li>
+                    </ol>
+                </section>
+                <!-- LIST KATEGORI -->
+                <section class="categories">
+                    <h2>Kategori</h2>
+                    <ul class="category-list">
+                        {% if category_list %}
+                        {% for ini_variabel_sementara_kategori in category_list %}
+                        <li><a href="{% url 'category_articles' ini_variabel_sementara_kategori.slug %}">{{ ini_variabel_sementara_kategori.name }} <span class="count">{{ ini_variabel_sementara_kategori.article_count }}</span></a></li>
+                        {% endfor %}
+                        {% endif %}
+                    </ul>
+                </section>
+                <section class="footers">
+                    <p>&copy; 2025 {{ webname }}. All rights reserved.</p>
 
-        <!-- Categories -->
-        <div class="sidebar-widget">
-            <div class="widget-header">
-                <div class="widget-icon">
-                    <i class="fas fa-folder"></i>
-                </div>
-                <h3 class="widget-title">Kategori</h3>
-            </div>
-            <div class="category-list">
-
-                {% if category_list %}
-                {% for ini_variabel_sementara_kategori in category_list %}
-                <a href="{% url 'category_articles' ini_variabel_sementara_kategori.slug %}" class="category-item">
-                    <span>{{ ini_variabel_sementara_kategori.name }}</span>
-                    <span class="category-count">{{ ini_variabel_sementara_kategori.article_count }}</span>
-                </a>
-                {% endfor %}
-                {% endif %}
-            </div>
-        </div>
-
-        <!-- Popular Tags -->
-        <!-- <div class="sidebar-widget">
-            <div class="widget-header">
-                <div class="widget-icon">
-                    <i class="fas fa-tags"></i>
-                </div>
-                <h3 class="widget-title">Tag Populer</h3>
-            </div>
-            <div class="tags-container">
-                <a href="#" class="tag-item">Agenda</a>
-            </div>
-        </div> -->
-    </aside>
-</div>
-
-<!-- Mobile Share FAB -->
-<div class="mobile-share-fab" onclick="toggleMobileShare()">
-    <i class="fas fa-share-alt"></i>
-</div>
+                </section>
+            </aside>
+        </main>
+    </div>
 {% endblock %}

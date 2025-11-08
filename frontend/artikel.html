@@ -1,79 +1,99 @@
-{% extends 'home/base.html' %}
-{% block title %}{{ category.name }}{% endblock %}
-{% block description %}{{ category.description }}{% endblock %}
-{% block meta %}
-    <meta name="description" content="{{ category.description }}">
-    <meta name="keywords" content="{{ category.keywords }}">
-    <meta name="author" content="{{ category.author }}">
-    <meta name="robots" content="index, follow">
-    <meta name="googlebot" content="index, follow">
-    <meta name="google" content="notranslate">
-{% endblock %}
-{% block content %}
- <main class="main-grid">
-            
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Artikel - Respublica</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="top-bar">
+                <div class="logo">
+                    <h1><a href="index.html">Respublica</a></h1>
+                </div>
+                <div class="header-right">
+                    <div class="social-media">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-google-plus-g"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fas fa-rss"></i></a>
+                    </div>
+                    <div class="search-bar">
+                        <input type="text" placeholder="Search">
+                        <button><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+                <div class="mobile-icons">
+                    <a href="#"><i class="fas fa-search"></i></a>
+                    <a href="#"><i class="fas fa-bars"></i></a>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#">Nasional</a></li>
+                    <li><a href="#">News</a></li>
+                    <li><a href="#">Politik</a></li>
+                    <li><a href="#">Hukum</a></li>
+                    <li><a href="#">Metro</a></li>
+                    <li><a href="#">Daerah</a></li>
+                    <li><a href="#">Ekonomi & Bisnis</a></li>
+                    <li><a href="#">Lifestyle</a></li>
+                    <li><a href="#">Otomotif</a></li>
+                    <li><a href="#">Bola & Sport</a></li>
+                    <li><a href="#">Edukasi</a></li>
+                    <li><a href="#">Tokoh</a></li>
+                    <li><a href="#">Hiburan</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main class="main-grid">
             <div class="main-content">
-    <section class="hero-slider">
-                    <h2>POPULER KATEGORI: <em style="color: #ff8c00;">{{ category.name|upper }}</em></h2>
-                    <div class="slider-container">
-                        <div class="slides">
-                            <article class="slide">
-                                <img src="https://faktasulsel.com/media/articles/featured_images/anggota-dprd-kota-makassar-mesakh-raymond-rantepadang-gelar-so_VoptIsI.jpeg" alt="Fokus 1">
-                                <div class="slide-content">
-                                    <h3>Perkuat Kemandirian Pangan Lutim, Bupati Irwan Dukung Program Cetak Sawah</h3>
-                                </div>
-                            </article>
-                            <article class="slide">
-                                <img src="https://faktasulsel.com/media/articles/featured_images/bupati-lutim-hadiri-peresmian-gedung-baru-mapolsek-nuha-ka_3kS2O5c.jpeg" alt="Fokus 2">
-                                <div class="slide-content">
-                                    <h4>Honda Rayakan Penjualan 35 Ribu Unit Brio di Sulsel Lewat GIIAS Makassar 2025</h4>
-                                </div>
-                            </article>
-                            <article class="slide">
-                                <img src="https://faktasulsel.com/media/articles/featured_images/ketua-dprd-lutra-hadiri-musrenbang-rpjpd-2025-2045-di-map_03O2j2w.jpeg" alt="Fokus 3">
-                                <div class="slide-content">
-                                    <h4>Makassar Raih Penghargaan Kep Daerah dengan Kinerja Terbaik 20</h4>
-                                </div>
-                            </article>
-                             <article class="slide">
-                                <img src="https://faktasulsel.com/media/articles/featured_images/anggota-dprd-kota-makassar-mesakh-raymond-rantepadang-gelar-so_VoptIsI.jpeg" alt="Fokus 4">
-                                <div class="slide-content">
-                                    <h3>DPKD Luwu Timur Matangkan Persiapan Lomba Perpustakaan Desa 2025</h3>
-                                </div>
-                            </article>
-                        </div>
-                        <button class="prev-btn"><i class="fas fa-chevron-left"></i></button>
-                        <button class="next-btn"><i class="fas fa-chevron-right"></i></button>
+                <article class="article-detail">
+                    <h2>Judul Artikel Berita yang Menarik dan Informatif</h2>
+                    <div class="article-meta">
+                        <span>Oleh: Nama Penulis</span> | <span>24 Juli 2025</span>
                     </div>
-                </section>
+                    <img src="https://faktasulsel.com/media/articles/featured_images/aliyah-mustika-ilham-kolaborasi-media-penting-untuk-umkm-da_mJt2j3g.jpeg" alt="Gambar Artikel">
+                    <div class="article-content">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+                    </div>
+                </article>
 
-
-                <section class="latest-news">
-                    <h2>DAFTAR BERITA <em style="color: #ff8c00;">{{ category.name|upper }}</em></h2>
-                    <div class="news-list">
-        {% if articles %}
-        {% for article in articles %}
-                <article class="news-item">
-                {% if article.featured_image %}
-                <img src="{{ article.featured_image.url }}" alt="{{ article.title }}">
-                {% else %}
-                {% endif %}
-                            <div class="news-content">
-                                <div class="news-meta">
-                                    <span class="category"><a href="{% url 'category_articles' article.category.slug %}">{{ article.category|upper }}</a></span>
-                                    <span class="date">{{ artikel.created_at|date:'d F Y' }}</span>
-                                </div>
-                                <h3><a href="{% url 'article_detail' article.slug %}">{{ article.title }}</a></h3>
-                            </div>
+                <section class="related-articles">
+                    <h2>ARTIKEL TERKAIT</h2>
+                    <div class="related-articles-grid">
+                        <article class="related-article-item">
+                            <img src="https://faktasulsel.com/media/articles/featured_images/anggota-dprd-kota-makassar-mesakh-raymond-rantepadang-gelar-so_VoptIsI.jpeg" alt="Terkait 1">
+                            <h3>Perkuat Kemandirian Pangan Lutim, Bupati Irwan Dukung Program Cetak Sawah</h3>
                         </article>
-        {% endfor %}
-        {% else %}
-        <p>Tidak ada artikel</p>
-        {% endif %}
-                
+                        <article class="related-article-item">
+                            <img src="https://faktasulsel.com/media/articles/featured_images/bupati-lutim-hadiri-peresmian-gedung-baru-mapolsek-nuha-ka_3kS2O5c.jpeg" alt="Terkait 2">
+                            <h3>Honda Rayakan Penjualan 35 Ribu Unit Brio di Sulsel</h3>
+                        </article>
+                        <article class="related-article-item">
+                            <img src="https://faktasulsel.com/media/articles/featured_images/ketua-dprd-lutra-hadiri-musrenbang-rpjpd-2025-2045-di-map_03O2j2w.jpeg" alt="Terkait 3">
+                            <h3>Makassar Raih Penghargaan Kep Daerah dengan Kinerja Terbaik</h3>
+                        </article>
                     </div>
                 </section>
-            </div> <aside class="sidebar">
+
+                <div class="comments-section">
+                    <h2>Komentar</h2>
+                    <form>
+                        <textarea placeholder="Tulis komentar Anda..."></textarea>
+                        <button type="submit">Kirim</button>
+                    </form>
+                    <div class="comment">
+                        <p><strong>Nama Pengguna:</strong> Komentar contoh.</p>
+                    </div>
+                </div>
+            </div>
+            <aside class="sidebar">
                 <section class="nasional">
                     <h2>NASIONAL</h2>
                     <ul>
@@ -107,7 +127,7 @@
                             <p>Bupati Lutim Hadiri Peresmian Gedung Baru Mapolsek Nuha</p>
                         </li>
                         <li>
-                            <img src="httpshttpsfaktasulsel.com/media/articles/featured_images/anggota-dprd-kota-makassar-mesakh-raymond-rantepadang-gelar-so_VoptIsI.jpeg" alt="Daerah 4">
+                            <img src="https://faktasulsel.com/media/articles/featured_images/anggota-dprd-kota-makassar-mesakh-raymond-rantepadang-gelar-so_VoptIsI.jpeg" alt="Daerah 4">
                             <p>Ketua DPRD Lutra Hadiri Musrenbang RPJPD 2025 2045 di Mapolres Lutra</p> 
                         </li>
                     </ul>
@@ -169,25 +189,14 @@
                     </ul>
 
                 </section>
-                <section class="categories">
-                    <h2>Kategori</h2>
-                    <ul class="category-list">
-                        <li><a href="#">Nasional <span class="count">7</span></a></li>
-                        <li><a href="#">Kriminalitas <span class="count">0</span></a></li>
-                        <li><a href="#">Politik <span class="count">3</span></a></li>
-                        <li><a href="#">Olahraga <span class="count">3</span></a></li>
-                        <li><a href="#">Suara Netizen <span class="count">0</span></a></li>
-                        <li><a href="#">Ekonomi <span class="count">2</span></a></li>
-                        <li><a href="#">Teknologi <span class="count">1</span></a></li>
-                        <li><a href="#">Gaya Hidup <span class="count">0</span></a></li>
-                    </ul>
-                </section>
                 <section class="footers">
-    <p>&copy; 2025 LosariPost. All rights reserved.</p>
-</section>
-</aside> 
-</main>
-{% endblock %}
+                    <p>&copy; 2025 Respublica. All rights reserved.</p>
 
+                </section>
+            </aside>
+        </main>
+    </div>
 
-
+    <script src="main.js"></script>
+</body>
+</html>

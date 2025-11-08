@@ -63,7 +63,7 @@
 							<a href="{% url 'app:article_edit' article.id %}">
 								<button class="btn primary small"><i class="ri-pencil-fill"></i></button>
 							</a>
-							<a href="{% url 'article_detail' article.slug %}">
+							<a href="{% url 'article_detail' category_slug=article.category.slug unique_id=article.unique_id slug=article.slug %}">
 								<button class="btn primary small"><i class="ri-eye-fill"></i></button>
 							</a>
 							<form method="POST" action="{% url 'app:article_delete' article.id %}" style="display: inline;">

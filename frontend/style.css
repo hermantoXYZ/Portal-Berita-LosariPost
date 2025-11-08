@@ -53,10 +53,6 @@ header {
     color: #004C99;
 }
 
-.logo img {
-    height: 50px;
-}
-
 .header-right {
     display: flex;
     align-items: center;
@@ -81,8 +77,8 @@ header {
 }
 
 .search-bar button {
-    border: 1px solid #ff7927;
-    background-color: #fe7828;
+    border: 1px solid #007BFF;
+    background-color: #007BFF;
     color: white;
     padding: 8px 12px;
     cursor: pointer;
@@ -95,7 +91,7 @@ header {
 
 /* Navigation Styles */
 nav {
-    background-color: #ff7927;
+    background-color: #004C99;
     margin-top: 10px;
 }
 
@@ -136,7 +132,7 @@ nav li a:hover {
 /* Section Titles */
 .hero-slider h2, .nasional h2, .daerah h2, .latest-news h2, .populars h2, .related-articles h2, .categories h2 {
     color: #333;
-    border-bottom: 3px solid #ffd3b8;
+    border-bottom: 3px solid #004C99;
     padding-bottom: 5px;
     margin-bottom: 20px;
     font-size: 20px;
@@ -262,7 +258,7 @@ footer {
         padding: 0;
     }
     .top-bar {
-        background-color: #ffffff;
+        background-color: #004C99;
         color: white;
         padding: 10px;
         position: relative;
@@ -325,7 +321,7 @@ footer {
 
 .news-item {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 20px;
 }
 
@@ -358,10 +354,6 @@ footer {
     margin: 0;
     font-size: 17px;
     line-height: 1.4;
-}
-
-.news-content h3:hover {
-    color: #454545;
 }
 
 
@@ -495,3 +487,52 @@ footer {
 }
 
 
+
+
+/* Category List Styles */
+.categories {
+    margin-bottom: 30px;
+}
+
+.categories h2 .fa-folder {
+    margin-right: 10px;
+    color: #004C99;
+}
+
+.category-list li {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    transition: all 0.2s ease-in-out;
+
+}
+
+.category-list li:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 12px rgba(0,0,0,0.1);
+}
+
+.category-list a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    font-weight: 600;
+    color: #333;
+    font-size: 15px;
+}
+
+.category-list .count {
+    background-color: #004C99;
+    color: white;
+    border-radius: 20px;
+    min-width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 0 8px;
+}
