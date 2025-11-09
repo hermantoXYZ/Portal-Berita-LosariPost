@@ -147,6 +147,7 @@ class Article(models.Model):
     STATUS_CHOICES = (
         ('draft', 'Draft'),
         ('published', 'Published'),
+        ('scheduled', 'Scheduled'),
         ('archived', 'Archived'),
     )
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -158,11 +159,13 @@ class Article(models.Model):
     topic = models.ManyToManyField(Topic, blank=True, related_name='articles')
     content = models.TextField()
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
-    featured_image = models.ImageField(upload_to=rename_featured_image, blank=True, null=True)
+    featured_image = models.ImageField(upload_to=rename_featured_image, blank=False, null=False)
+    caption_image = models.CharField(max_length=255, blank=True, null=True, verbose_name='Keterangan Gambar')
     is_headline = models.BooleanField(default=False, verbose_name='Tampilkan di Headline')
     views_count = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
+    published_at = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         ordering = ['-created_at']

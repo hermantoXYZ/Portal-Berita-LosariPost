@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
-from app.models import Article, Category, Page, UserAnggota
+from app.models import Article, Category, Page, UserAnggota, Topic
 from django.db.models import Count, Q
 from django.utils.text import slugify
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -63,17 +63,17 @@ def index(request):
 
 
 def article_detail(request, slug, category_slug, unique_id):
-    # article = get_object_or_404(Article, slug=slug)
     article = get_object_or_404(Article, unique_id=unique_id, slug=slug, category__slug=category_slug)
     category_list_variabel = Category.objects.all()
     popular_articles = Article.objects.filter(status='published').order_by('-views_count')[:7]
     article.views_count += 1
     article.save()
-    category_list_variabel = Category.objects.annotate(
-        article_count=Count('articles', filter=Q(articles__status='published'))
-    )
-    latest_articles_variabel = Article.objects.filter(status='published').order_by('-created_at')[:3]
-    return render(request, 'home/article_detail.html', {'article': article, 'views': article.views_count, 'category_list': category_list_variabel, 'latest_articles': latest_articles_variabel, 'popular_articles': popular_articles})
+    category_list_variabel = Category.objects.annotate(article_count=Count('articles', filter=Q(articles__status='published')))
+    related_articles = Article.objects.filter( topic__in=article.topic.all(), status='published' ).exclude(id=article.id).distinct().order_by('-created_at')[:4]
+    latest_articles_variabel = Article.objects.filter(status='published').order_by('-created_at')[:6]
+    topics = article.topic.all()
+    
+    return render(request, 'home/article_detail.html', {'article': article, 'views': article.views_count, 'category_list': category_list_variabel, 'latest_articles': latest_articles_variabel, 'popular_articles': popular_articles, 'related_articles': related_articles, 'topics': topics})
 
 def article_list(request):
     all_articles = Article.objects.filter(status='published').order_by('-created_at')
@@ -160,6 +160,40 @@ def category_articles(request, slug):
 
 
     return render(request, 'home/category_articles.html', context)
+
+def topic_articles(request, slug):
+    topic = get_object_or_404(Topic, slug=slug)
+    articles = Article.objects.filter(
+        topic=topic,
+        status='published'
+    ).order_by('-created_at')
+    popular_articles = Article.objects.filter(topic=topic, status='published').order_by('-views_count')[:3]
+    makassar_raya_articles = Article.objects.filter(category__slug='makassar-raya', status='published').order_by('-created_at')[:4]
+    celebes_voice_articles = Article.objects.filter(category__slug='celebes-voice', status='published').order_by('-created_at')[:6]
+    hukum_articles = Article.objects.filter(category__slug='hukum', status='published').order_by('-created_at')[:6]
+    inspirasi_nusantara_articles = Article.objects.filter(category__slug='inspirasi-nusantara', status='published').order_by('-created_at')[:6]
+    lensa_budaya_articles = Article.objects.filter(category__slug='lensa-budaya', status='published').order_by('-created_at')[:6]
+    sport_hiburan_articles = Article.objects.filter(category__slug='sport-hiburan', status='published').order_by('-created_at')[:6]
+    teknologi_articles = Article.objects.filter(category__slug='teknologi', status='published').order_by('-created_at')[:6]
+    daerah_articles = Article.objects.filter(category__slug='daerah', status='published').order_by('-created_at')[:6]
+    politik = Article.objects.filter(category__slug='politik', status='published').order_by('-created_at')[:6]
+    news = Article.objects.filter(category__slug='news', status='published').order_by('-created_at')
+
+    return render(request, 'home/topic_articles.html', {
+        'topic': topic,
+        'articles': articles,
+        'popular_articles': popular_articles,
+        'makassar_raya_articles': makassar_raya_articles,
+        'celebes_voice_articles': celebes_voice_articles,
+        'hukum_articles': hukum_articles,
+        'inspirasi_nusantara_articles': inspirasi_nusantara_articles,
+        'lensa_budaya_articles': lensa_budaya_articles,
+        'sport_hiburan_articles': sport_hiburan_articles,
+        'teknologi_articles': teknologi_articles,
+        'daerah_articles': daerah_articles,
+        'politik': politik,
+        'news': news,
+    })
 
 def page_detail(request, slug):
     page = get_object_or_404(Page, slug=slug)

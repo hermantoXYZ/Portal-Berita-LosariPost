@@ -64,18 +64,6 @@
                         </div>
                     {% endif %}
                 </div>
-                <div class="form-group col-md-6">
-                    <label for="{{ form.created_at.id_for_label }}">Published Date</label>
-                    {{ form.created_at }}
-                    {% if form.created_at.errors %}
-                        <div class="error-message">
-                            {% for error in form.created_at.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                    <small class="form-help">Tanggal publikasi artikel (opsional)</small>
-                </div>
             </div>
 
             <div class="form-group">
@@ -103,7 +91,32 @@
                 {% endif %}
                 <small class="form-help">Upload gambar untuk artikel (opsional)</small>
             </div>
+            <div class="form-group">
+                <label for="{{ form.caption_image.id_for_label }}">Caption Image</label>
+                {{ form.caption_image }}
+                {% if form.caption_image.errors %}
+                    <div class="error-message">
+                        {% for error in form.caption_image.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <small class="form-help">Masukkan keterangan gambar (opsional)</small>
+            </div>
             <!-- status -->
+            <div class="form-row">
+            <div class="form-group col-md-6">
+                    <label for="{{ form.created_at.id_for_label }}">Published Date</label>
+                    {{ form.created_at }}
+                    {% if form.created_at.errors %}
+                        <div class="error-message">
+                            {% for error in form.created_at.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <small class="form-help">Tanggal publikasi artikel (opsional)</small>
+                </div>
              <div class="form-group">
                 <label for="{{ form.status.id_for_label }}">Status</label>
                 {{ form.status }}
@@ -114,6 +127,7 @@
                         {% endfor %}
                     </div>
                 {% endif %}
+             </div>
              </div>
             <div class="form-check">
                 {{ form.is_headline }}

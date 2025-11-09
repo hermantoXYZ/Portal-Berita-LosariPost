@@ -40,6 +40,7 @@ urlpatterns += (
     path('<slug:category_slug>/<slug:unique_id>/<slug:slug>/', views.article_detail, name='article_detail'),
     path('article/', views.article_list, name='article_list'),
     path('category/<slug:slug>/', views.category_articles, name='category_articles'),
+    path('topic/<slug:slug>/', views.topic_articles, name='topic_articles'),
     path('page/<slug:slug>/', views.page_detail, name='page_detail'),
 
 )
