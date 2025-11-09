@@ -124,7 +124,6 @@
                         {% endif %}
                     </ol>
                 </section>
-
                 <section class="daerah">
                     <h2>POLITIK</h2>
                     <ul>
@@ -156,7 +155,7 @@
                         {% for artikel in daerah_articles %}
                         <li>
                             <img src="{{ artikel.featured_image.url }}" alt="Daerah 1">
-                             <div class="news-content">
+                            <div class="news-content">
                             <p>
                                         <a href="{% url 'article_detail' category_slug=artikel.category.slug unique_id=artikel.unique_id slug=artikel.slug %}">
                                             {{ artikel.title|truncatechars:80 }}
@@ -175,7 +174,6 @@
                         {% endfor %}
                     </ul>
                 </section>
-
                 <section class="nasional">
                     <h2>HUKUM</h2>
                     <ul>
@@ -201,7 +199,6 @@
                         {% endfor %}
                     </ul>
                 </section>
-
                 <section class="nasional">
                     <h2>NEWS</h2>
                     <ul>
@@ -227,8 +224,6 @@
                         {% endfor %}
                     </ul>
                 </section>
-
-
                 <section class="nasional">
                     <h2>INSPIRASI NUSANTARA</h2>
                     <ul>
@@ -338,7 +333,7 @@
                         {% endfor %}
                         {% endif %}
                     </ul>
-                </section>
+        </section>
 <section class="footers">
     <p>&copy; 2025 LosariPost. All rights reserved.</p>
     <a href="/page/kontak">Kontak</a> |
