@@ -127,6 +127,10 @@ nav li a:hover {
     gap: 30px;
 }
 
+.main-grid-full {
+    padding: 20px;
+}
+
 @media (min-width: 992px) {
     .main-grid {
         grid-template-columns: 2.5fr 1fr;
@@ -408,9 +412,15 @@ footer {
     margin-top: 30px;
 }
 
+.footers a {
+    margin: 5px 0;
+    font-size: 10px;
+    color: #555;
+}
+
 /* Article Detail Styles */
 .article-detail {
-    padding: 20px;
+    padding: 5px;
 }
 
 .article-detail h2 {

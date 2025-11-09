@@ -117,6 +117,22 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+    
+class Topic(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    slug = models.SlugField(max_length=50, unique=True, blank=True)
+
+    class Meta:
+        verbose_name_plural = "Topics"
+        ordering = ['name']
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
 
 def rename_featured_image(instance, filename):
     ext = filename.split('.')[-1]
@@ -139,6 +155,7 @@ class Article(models.Model):
     unique_id = models.CharField(max_length=7, unique=True, editable=False, blank=True)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='articles')
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name='articles')
+    topic = models.ManyToManyField(Topic, blank=True, related_name='articles')
     content = models.TextField()
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
     featured_image = models.ImageField(upload_to=rename_featured_image, blank=True, null=True)

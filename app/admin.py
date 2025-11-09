@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.db import models
-from .models import UserAdmin, UserAnggota, Article, Category, Page, Tag
+from .models import UserAdmin, UserAnggota, Article, Category, Page, Topic
 from import_export.admin import ImportExportModelAdmin
 from .admin_resources import UserAnggotaResource
 
@@ -13,4 +13,4 @@ admin.site.register(UserAdmin)
 admin.site.register(Article)
 admin.site.register(Category)
 admin.site.register(Page)
-admin.site.register(Tag)
+admin.site.register(Topic)

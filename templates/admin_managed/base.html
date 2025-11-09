@@ -260,22 +260,18 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var elements = document.querySelectorAll('.js-choices-multiple');
-        elements.forEach(function(el) {
-            var placeholder = el.getAttribute('data-placeholder') || 'Pilih..';
-            new Choices(el, {
-                removeItemButton: true,
-                searchResultLimit: 10,
-                placeholder: true,
-                placeholderValue: placeholder,
-                noResultsText: 'Tidak ditemukan',
-                noChoicesText: 'Tidak ada pilihan',
-                itemSelectText: 'Pilih',
-                shouldSort: false
-            });
+document.addEventListener('DOMContentLoaded', function () {
+    const element = document.getElementById('id_topic');
+    if (element) {
+        new Choices(element, {
+            removeItemButton: true,
+            searchEnabled: true,
+            placeholderValue: 'Pilih topik artikel...',
+            noResultsText: 'Tidak ada hasil',
+            noChoicesText: 'Tidak ada topik tersedia',
         });
-    });
+    }
+});
 </script>
 {% block script_costum %} 
 {% endblock script_costum %} 

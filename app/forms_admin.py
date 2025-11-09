@@ -73,11 +73,12 @@ class formArticleCreate(forms.ModelForm):
     content = forms.CharField(widget=SummernoteWidget())
     class Meta:
         model = Article
-        fields = ['title', 'created_at', 'slug', 'category', 'content', 'featured_image', 'status', 'is_headline']
+        fields = ['title', 'created_at', 'slug', 'category', 'topic', 'content', 'featured_image', 'status', 'is_headline']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Masukkan Judul Artikel'}),
             'slug': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Slug/URL Artikel (Boleh dikosongkan)'}),
             'category': forms.Select(attrs={'class': 'form-control', 'placeholder': 'Pilih Kategori Artikel'}),
+            'topic': forms.SelectMultiple(attrs={'class': 'form-control', 'placeholder': 'Pilih Topik Artikel'}),
             'created_at': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),
             'featured_image': forms.FileInput(attrs={'class': 'form-control'}),
             'status': forms.Select(attrs={'class': 'form-control'}),
@@ -88,11 +89,12 @@ class formArticleEdit(forms.ModelForm):
     content = forms.CharField(widget=SummernoteWidget())
     class Meta:
         model = Article
-        fields = ['title', 'slug', 'category', 'content', 'featured_image', 'status','created_at', 'is_headline']
+        fields = ['title', 'slug', 'category', 'topic', 'content', 'featured_image', 'status','created_at', 'is_headline']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Masukkan Judul Artikel'}),
             'slug': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Slug/URL Artikel (Boleh dikosongkan)'}),
             'category': forms.Select(attrs={'class': 'form-control'}),
+            'topic': forms.SelectMultiple(attrs={'class': 'form-control'}),
             'created_at': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),
             'featured_image': forms.FileInput(attrs={'class': 'form-control'}),
             'status': forms.Select(attrs={'class': 'form-control'}),

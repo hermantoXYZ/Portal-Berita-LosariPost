@@ -65,116 +65,120 @@
                     </div>
                 </section>
             </div> <aside class="sidebar">
+
+
                 <section class="nasional">
                     <h2>NASIONAL</h2>
                     <ul>
+                        {% for artikel in nasional_articles %}
                         <li>
-                            <img src="https://faktasulsel.com/media/articles/featured_images/aliyah-mustika-ilham-kolaborasi-media-penting-untuk-umkm-da_mJt2j3g.jpeg" alt="Nasional 1">
-                            <p>Prabowo Pastikan Penertiban Barang Bekas Impor Tak Rugikan UMKM</p>
+                            <img src="{{ artikel.featured_image.url }}" alt="{{ artikel.title }}">
+                            <div class="news-content">
+                                <p>
+                                    <a href="{% url 'article_detail' category_slug=artikel.category.slug unique_id=artikel.unique_id slug=artikel.slug %}">
+                                        {{ artikel.title|truncatechars:80 }}
+                                    </a>
+                                </p>
+                                <div class="news-meta">
+                                    <span class="date">
+                                        {{ artikel.created_at|date:"d M Y" }}
+                                    </span>
+                                    <span class="category">
+                                        {{ artikel.category.name|upper }}
+                                    </span>
+                                </div>
+                            </div>
                         </li>
-                        <li>
-                            <img src="https://faktasulsel.com/media/articles/featured_images/aliyah-mustika-ilham-kolaborasi-media-penting-untuk-umkm-da_mJt2j3g.jpeg" alt="Nasional 2">
-                            <p>Stasiun Tanah Abang Baru Diresmikan, Simbol Konektivitas Modern Jakarta</p>
-                        </li>
-                        <li>
-                            <img src="https://faktasulsel.com/media/articles/featured_images/aliyah-mustika-ilham-kolaborasi-media-penting-untuk-umkm-da_mJt2j3g.jpeg" alt="Nasional 3">
-                            <p>Prabowo Ungkap Peran Al Perkuat Ketahanan Pangan Indonesia di APEC 2025</p>
-                        </li>
+                        {% endfor %}
                     </ul>
+                </section>
+
+                <section class="daerah">
+                    <h2>POLITIK</h2>
+                    <ul>
+                        {% for artikel in politik %}
+                        <li>
+                            <img src="{{ artikel.featured_image.url }}" alt="Daerah 1">
+                             <div class="news-content">
+                            <p>
+                                        <a href="{% url 'article_detail' category_slug=artikel.category.slug unique_id=artikel.unique_id slug=artikel.slug %}">
+                                            {{ artikel.title|truncatechars:80 }}
+                                        </a>
+                                    </p>
+                                    <div class="news-meta">
+                                    <span class="date">
+                                        {{ artikel.created_at|date:"d M Y" }}
+                                    </span>
+                                    <span class="category">
+                                        {{ artikel.category.name|upper }}
+                                    </span>
+                                </div>
+                                </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </section>
+                <section class="populars">
+                    <h2>POPULERS</h2>
+                    <ol class="popular-list">
+                        {% if popular_articles %}
+                            {% for artikel in popular_articles %}
+                                <li>
+                                    <p>
+                                        <a href="{% url 'article_detail' category_slug=artikel.category.slug unique_id=artikel.unique_id slug=artikel.slug %}">
+                                            {{ artikel.title|truncatechars:80 }}
+                                        </a>
+                                    </p>
+                                </li>
+                            {% endfor %}
+                        {% else %}
+                            <li><p>Tidak ada artikel populer saat ini.</p></li>
+                        {% endif %}
+                    </ol>
                 </section>
                 <section class="daerah">
                     <h2>DAERAH</h2>
                     <ul>
+                        {% for artikel in daerah_articles %}
                         <li>
-                            <img src="https://faktasulsel.com/media/articles/featured_images/anggota-dprd-kota-makassar-mesakh-raymond-rantepadang-gelar-so_VoptIsI.jpeg" alt="Daerah 1">
-                            <p>DPKD Luwu Timur Matangkan Persiapan Lomba Perpustakaan Desa 2025</p>
+                            <img src="{{ artikel.featured_image.url }}" alt="Daerah 1">
+                             <div class="news-content">
+                            <p>
+                                        <a href="{% url 'article_detail' category_slug=artikel.category.slug unique_id=artikel.unique_id slug=artikel.slug %}">
+                                            {{ artikel.title|truncatechars:80 }}
+                                        </a>
+                                    </p>
+                                    <div class="news-meta">
+                                    <span class="date">
+                                        {{ artikel.created_at|date:"d M Y" }}
+                                    </span>
+                                    <span class="category">
+                                        {{ artikel.category.name|upper }}
+                                    </span>
+                                </div>
+                                </div>
                         </li>
-                        <li>
-                            <img src="https://faktasulsel.com/media/articles/featured_images/anggota-dprd-kota-makassar-mesakh-raymond-rantepadang-gelar-so_VoptIsI.jpeg" alt="Daerah 2">
-                            <p>Perkuat Kemandirian Pangan Lutim, Bupati Irwan Dukung Program Cetak Sawah</p>
-                        </li>
-                        <li>
-                            <img src="https://faktasulsel.com/media/articles/featured_images/anggota-dprd-kota-makassar-mesakh-raymond-rantepadang-gelar-so_VoptIsI.jpeg" alt="Daerah 3">
-                            <p>Bupati Lutim Hadiri Peresmian Gedung Baru Mapolsek Nuha</p>
-                        </li>
-                        <li>
-                            <img src="httpshttpsfaktasulsel.com/media/articles/featured_images/anggota-dprd-kota-makassar-mesakh-raymond-rantepadang-gelar-so_VoptIsI.jpeg" alt="Daerah 4">
-                            <p>Ketua DPRD Lutra Hadiri Musrenbang RPJPD 2025 2045 di Mapolres Lutra</p> 
-                        </li>
+                        {% endfor %}
                     </ul>
+                </section>
 
-                </section>
-                <section class="populars">
-                    <h2>POPULER</h2>
-                    <ol class="popular-list">
-                        <li>
-                            <p>Buka GIIAS Makassar 2025, Munafri Dorong Ekonomi Otomotif Daerah Bertumbuh</p>
-                        </li>
-                        <li>
-                            <p>Sosialisasi Perlindungan Hukum Terhadap Korban Pelecehan Seksual, Isnaniah : Jadilah Pelopor dan Pelapor</p>
-                        </li>
-                        <li>
-                            <p>Edukasi Warga Tallo, DP3A Makassar Ajak Laporkan Kekerasan Seksual ke Lontara+ dan UPTD PPA</p>
-                        </li>
-                        <li>
-                            <p>Munafri Tinjau Lokasi Barombong, Siapkan Solusi Pembebasan Lahan Jembatan Baru</p>
-                        </li>
-                    </ol>
-                </section>
-                 <section class="populars">
-                    <h2>POPULER</h2>
-                    <ol class="popular-list">
-                        <li>
-                            <p>Buka GIIAS Makassar 2025, Munafri Dorong Ekonomi Otomotif Daerah Bertumbuh</p>
-                        </li>
-                        <li>
-                            <p>Sosialisasi Perlindungan Hukum Terhadap Korban Pelecehan Seksual, Isnaniah : Jadilah Pelopor dan Pelapor</p>
-                        </li>
-                        <li>
-                            <p>Edukasi Warga Tallo, DP3A Makassar Ajak Laporkan Kekerasan Seksual ke Lontara+ dan UPTD PPA</p>
-                        </li>
-                        <li>
-                            <p>Munafri Tinjau Lokasi Barombong, Siapkan Solusi Pembebasan Lahan Jembatan Baru</p>
-                        </li>
-                    </ol>
-                </section>
-                 <section class="daerah">
-                    <h2>DAERAH</h2>
-                    <ul>
-                        <li>
-                            <img src="https://faktasulsel.com/media/articles/featured_images/anggota-dprd-kota-makassar-mesakh-raymond-rantepadang-gelar-so_VoptIsI.jpeg" alt="Daerah 1">
-                            <p>DPKD Luwu Timur Matangkan Persiapan Lomba Perpustakaan Desa 2025</p>
-                        </li>
-                        <li>
-                            <img src="https://faktasulsel.com/media/articles/featured_images/anggota-dprd-kota-makassar-mesakh-raymond-rantepadang-gelar-so_VoptIsI.jpeg" alt="Daerah 2">
-                            <p>Perkuat Kemandirian Pangan Lutim, Bupati Irwan Dukung Program Cetak Sawah</p>
-                        </li>
-                        <li>
-                            <img src="https://faktasulsel.com/media/articles/featured_images/anggota-dprd-kota-makassar-mesakh-raymond-rantepadang-gelar-so_VoptIsI.jpeg" alt="Daerah 3">
-                            <p>Bupati Lutim Hadiri Peresmian Gedung Baru Mapolsek Nuha</p>
-                        </li>
-                        <li>
-                            <img src="https://faktasulsel.com/media/articles/featured_images/anggota-dprd-kota-makassar-mesakh-raymond-rantepadang-gelar-so_VoptIsI.jpeg" alt="Daerah 4">
-                            <p>Ketua DPRD Lutra Hadiri Musrenbang RPJPD 2025 2045 di Mapolres Lutra</p> 
-                        </li>
-                    </ul>
-
-                </section>
                 <section class="categories">
                     <h2>Kategori</h2>
                     <ul class="category-list">
-                        <li><a href="#">Nasional <span class="count">7</span></a></li>
-                        <li><a href="#">Kriminalitas <span class="count">0</span></a></li>
-                        <li><a href="#">Politik <span class="count">3</span></a></li>
-                        <li><a href="#">Olahraga <span class="count">3</span></a></li>
-                        <li><a href="#">Suara Netizen <span class="count">0</span></a></li>
-                        <li><a href="#">Ekonomi <span class="count">2</span></a></li>
-                        <li><a href="#">Teknologi <span class="count">1</span></a></li>
-                        <li><a href="#">Gaya Hidup <span class="count">0</span></a></li>
+                        {% if category_list %}
+                        {% for ini_variabel_sementara_kategori in category_list %}
+                        <li><a href="{% url 'category_articles' ini_variabel_sementara_kategori.slug %}">{{ ini_variabel_sementara_kategori.name }} <span class="count">{{ ini_variabel_sementara_kategori.article_count }}</span></a></li>
+                        {% endfor %}
+                        {% endif %}
                     </ul>
                 </section>
                 <section class="footers">
     <p>&copy; 2025 LosariPost. All rights reserved.</p>
+    <a href="/page/kontak">Kontak</a> |
+    <a href="/page/tentang-kami">Tentang Kami</a> |
+    <a href="/page/pedoman-media-siber">Pedoman Media Siber</a> |
+    <a href="/page/redaksi">Redaksi</a>
+
 </section>
 </aside> 
 </main>

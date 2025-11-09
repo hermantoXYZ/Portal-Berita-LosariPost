@@ -53,6 +53,17 @@
                         </div>
                     {% endif %}
                 </div>
+                <div class="form-group">
+                    <label for="{{ form.topic.id_for_label }}">Topik Artikel <span class="required">*</span></label>
+                    {{ form.topic }}
+                    {% if form.topic.errors %}
+                        <div class="error-message">
+                            {% for error in form.topic.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
                 <div class="form-group col-md-6">
                     <label for="{{ form.created_at.id_for_label }}">Published Date</label>
                     {{ form.created_at }}
@@ -110,9 +121,6 @@
                     Tampilkan di Headline
                 </label>
             </div> 
-            
-            
-
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">
                     <i class="ri-save-line"></i>

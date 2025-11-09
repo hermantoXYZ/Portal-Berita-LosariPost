@@ -8,16 +8,6 @@
     <meta name="robots" content="index, follow">
     <meta name="googlebot" content="index, follow">
     <meta name="google" content="notranslate">
-    <meta name="google-site-verification" content="{{ web_google_site_verification }}">
-    <meta name="google-site-verification" content="{{ web_google_site_verification }}">
-    <!-- Icons -->
-    <link rel="icon" href="{{ web_favicon }}">
-    <link rel="apple-touch-icon" href="{{ web_apple_touch_icon }}">
-    <link rel="manifest" href="{{ web_manifest }}">
-    <meta name="theme-color" content="{{ web_theme_color }}">
-    <meta name="msapplication-TileColor" content="{{ web_msapplication_tile_color }}">
-    <meta name="msapplication-TileImage" content="{{ web_msapplication_tile_image }}">
-    <meta name="msapplication-config" content="{{ web_msapplication_config }}">
 {% endblock %}
 {% block content %}
 <style>
@@ -320,17 +310,6 @@
     }
     </style>
 <section class="articles-section">
-<nav class="breadcrumb">
-    <div class="breadcrumb-container">
-        <div class="breadcrumb-nav">
-            <a href="{% url 'index' %}">Home</a>
-            <i class="fas fa-chevron-right"></i>
-            <a href="{% url 'article_list' %}">Artikel</a>
-            <i class="fas fa-chevron-right"></i>
-            <span class="current">Semua Artikel</span>
-        </div>
-    </div>
-</nav>
 <!-- Search and Filter Section -->
 <div class="search-filter-container">
     <form method="GET" action="{% url 'article_list' %}" class="search-filter-form">
@@ -365,6 +344,8 @@
     </form>
 </div>
 
+
+
 <!-- Search Results Info -->
 {% if search_query or current_category %}
 <div class="search-results-info">
@@ -378,45 +359,34 @@
 </div>
 {% endif %}
 
-    <div class="article-grid" style="margin-top: 20px; margin-bottom: 20px;">
+
+<div style="display: flex; flex-direction: column; gap: 20px; margin: 20px;">
         {% if articles %}
         {% for ini_variabel_sementara_artikel in articles %}
-        <article class="article-card">
-            <div class="article-image">
+        <article class="news-item" style="background: whitesmoke; padding: 15px; border-radius: 12px; display: flex; gap: 15px; align-items: center;">
                 {% if ini_variabel_sementara_artikel.featured_image %}
-                <img src="{{ ini_variabel_sementara_artikel.featured_image.url }}" alt="{{ ini_variabel_sementara_artikel.title }}" class="article-image-img">
+                <img src="{{ ini_variabel_sementara_artikel.featured_image.url }}" alt="{{ ini_variabel_sementara_artikel.title }}">
                 {% else %}
-                <div class="article-image-placeholder"></div>
                 {% endif %}
-            </div>
-            <div class="article-content">
-                <div class="article-meta">
-                    <span class="category">{{ ini_variabel_sementara_artikel.category|truncatechars:9 }}</span>
-                    <span class="date">📅 {{ ini_variabel_sementara_artikel.created_at|date:'d F Y' }}</span>
+                <div class="news-content">
+                <div class="news-meta">
+                                    <span class="category"><a href="{% url 'category_articles' ini_variabel_sementara_artikel.category.slug %}">{{ ini_variabel_sementara_artikel.category|upper }}</a></span>
+                                    <span class="date">{{ ini_variabel_sementara_artikel.created_at|date:'d F Y' }}</span>
+                                </div>
+                                <h3><a href="{% url 'article_detail' category_slug=ini_variabel_sementara_artikel.category.slug unique_id=ini_variabel_sementara_artikel.unique_id slug=ini_variabel_sementara_artikel.slug %}">{{ ini_variabel_sementara_artikel.title }}</a></h3>
                 </div>
-                <h2 class="article-title">
-                    <a href="{% url 'article_detail' ini_variabel_sementara_artikel.slug %}">{{ ini_variabel_sementara_artikel.title|capfirst|truncatechars:50 }}</a>
-                </h2>
-                <p class="article-excerpt">
-                    {{ ini_variabel_sementara_artikel.excerpt }}
-                </p>
-                <div class="article-footer">
-                    <div class="author">
-                        <div class="author-avatar">AS</div>
-                        <span>{{ ini_variabel_sementara_artikel.author }}</span>
-                    </div>
-                    <a href="{% url 'article_detail' ini_variabel_sementara_artikel.slug %}">
-                        <button class="read-more">Baca Selengkapnya</button>
-                    </a>
-                </div>
-            </div>
         </article>
         {% endfor %}
         {% else %}
         {% endif %}
-       
-    </div>
-    
+</div>
+
+
+
+
+
+
+
     <!-- Pagination -->
     {% if paginator and articles.has_other_pages %}
     <div class="pagination-container">
@@ -442,6 +412,11 @@
             </div>
             {% endif %}
         </div>
+
+
+
+
+
         <div class="pagination">
             {% if articles.has_previous %}
                 <a href="?page=1{% if search_query %}&search={{ search_query }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}{% if request.GET.per_page %}&per_page={{ request.GET.per_page }}{% endif %}" class="page-link" title="Halaman Pertama">&laquo; First</a>

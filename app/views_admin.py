@@ -47,6 +47,7 @@ def article_create(request):
                 article.status = form.cleaned_data['status']
             
             article.save()
+            form.save_m2m()
             messages.success(request, 'Artikel berhasil dibuat!')
             return redirect('app:article_list')
         else:

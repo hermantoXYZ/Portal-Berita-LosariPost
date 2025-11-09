@@ -15,19 +15,21 @@ def custom_404(request, exception):
     return render(request, "home/404.html", status=404)
 
 def index(request):
-    # Ambil semua artikel yang published
     all_articles = Article.objects.filter(status='published').order_by('-created_at')
     headline_articles = Article.objects.filter(is_headline=True, status='published').order_by('-created_at')[:3]
+    nasional_articles = Article.objects.filter(category__slug='nasional', status='published').order_by('-created_at')[:4]
+    daerah_articles = Article.objects.filter(category__slug='daerah', status='published').order_by('-created_at')[:6]
+    politik = Article.objects.filter(category__slug='politik', status='published').order_by('-created_at')[:6]
+    popular_articles = Article.objects.filter(status='published').order_by('-views_count')[:7]
+    category_list_variabel = Category.objects.all()
     paginator = Paginator(all_articles, 6)
     page = request.GET.get('page')
     
     try:
         articles = paginator.page(page)
     except PageNotAnInteger:
-        # Jika page bukan integer, tampilkan halaman pertama
         articles = paginator.page(1)
     except EmptyPage:
-        # Jika page melebihi jumlah halaman yang ada, tampilkan halaman terakhir
         articles = paginator.page(paginator.num_pages)
     
     featured_article = Article.objects.filter(status='published').order_by('-created_at').first()
@@ -37,6 +39,11 @@ def index(request):
         'featured_article': featured_article,
         'paginator': paginator,
         'headline_articles': headline_articles,
+        'nasional_articles': nasional_articles,
+        'daerah_articles': daerah_articles,
+        'politik': politik,
+        'popular_articles': popular_articles,
+        'category_list': category_list_variabel,
     }
     return render(request,'home/index.html', context) 
 
@@ -107,7 +114,8 @@ def article_list(request):
 def category_articles(request, slug):
     category = get_object_or_404(Category, slug=slug)
     articles = Article.objects.filter(category=category, status='published').order_by('-created_at')
-    return render(request, 'home/category_articles.html', {'category': category, 'articles': articles})
+    popular_articles = Article.objects.filter(status='published').order_by('-views_count')[:3]
+    return render(request, 'home/category_articles.html', {'category': category, 'articles': articles, 'popular_articles': popular_articles})
 
 def page_detail(request, slug):
     page = get_object_or_404(Page, slug=slug)

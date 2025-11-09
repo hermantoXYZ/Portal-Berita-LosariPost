@@ -5,10 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}LosariPost.com{% endblock %}</title>
-    <meta name="description" content="{% block description %}{% endblock %}">
 	{% block meta %}{% endblock %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-   <link rel="stylesheet" href="{% static 'home.css' %}?v={{ STATIC_VERSION }}">
+    <link rel="stylesheet" href="{% static 'home.css' %}?v={{ STATIC_VERSION }}">
 </head>
 <body>
     <div class="container">
@@ -24,10 +23,11 @@
                         <a href="#"><i class="fab fa-twitter"></i></a>
                         <a href="#"><i class="fas fa-rss"></i></a>
                     </div>
-                    <div class="search-bar">
-                        <input type="text" placeholder="Search">
-                        <button><i class="fas fa-search"></i></button>
-                    </div>
+                  <form method="get" action="{% url 'article_list' %}" class="search-bar">
+    <input type="text" name="search" placeholder="Search" value="{{ search_query|default:'' }}">
+    <button type="submit"><i class="fas fa-search"></i></button>
+</form>
+
                 </div>
                 <div class="mobile-icons">
                     <a href="#"><i class="fas fa-search" style="color: #000;"></i></a>
@@ -37,22 +37,16 @@
             <nav>
                 <ul>
                     <li><a href="#">Home</a></li>
-                    <li><a href="/category/nasional">Nasional</a></li>
-                    <li><a href="/category/news/">News</a></li>
-                    <li><a href="/category/politik/">Politik</a></li>
+                    <li><a href="/category/news">News</a></li>
                     <li><a href="/category/hukum">Hukum</a></li>
-                    <li><a href="/category/metro">Metro</a></li>
-                    <li><a href="/category/daerah">Daerah</a></li>
-                    <li><a href="/category/ekonomi">Ekonomi & Bisnis</a></li>
-                    <li><a href="/category/lifestyle">Lifestyle</a></li>
-                    <li><a href="/category/otomotif">Otomotif</a></li>
-                    <li><a href="/category/olahraga/">Olahraga</a></li>
-                    <li><a href="/category/pendidikan/">Pendidikan</a></li>
-                    <li><a href="/category/tokoh/">Tokoh</a></li>
-                    <li><a href="/category/teknologi/">Teknologi</a></li>
-                    <li><a href="/category/hiburan/">Hiburan</a></li>
-                    <li><a href="/category/food/">Food</a></li>
-                    <li><a href="/category/health/">Health</a></li>
+                    <li><a href="/category/politik">Politik</a></li>
+                    <li><a href="/category/makassar-raya/">⁠Makassar Raya</a></li>
+                    <li><a href="/category/celebes-voice/">Celebes Voice</a></li>
+                    <li><a href="/category/inspirasi-nusantara">⁠Inspirasi Nusantara</a></li>
+                    <li><a href="/category/lensa-budaya">Lensa Budaya</a></li>
+                    <li><a href="/category/sport-hiburan">Sport & Hiburan</a></li>
+                    <li><a href="/category/teknologi">Teknologi</a></li>
+                    <li><a href="/category/lainnya">Lainnya</a></li>
                 </ul>
             </nav>
         </header>
