@@ -1,6 +1,6 @@
 from django import forms
 from django.utils import timezone
-from .models import Page, Article, UserAnggota, UserAdmin
+from .models import Page, Article, UserAnggota, UserAdmin, Topic
 from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
 tgl_now = timezone.now()
 
@@ -103,3 +103,13 @@ class formArticleEdit(forms.ModelForm):
             'is_headline': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
 
+
+
+class formTopicCreate(forms.ModelForm):
+    class Meta:
+        model = Topic
+        fields = ['name', 'slug']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Masukan Judul Topik'}),
+            'slug': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Slug'}),
+        }

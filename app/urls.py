@@ -30,5 +30,9 @@ urlpatterns = [
     path('article_create/', views_admin.article_create, name='article_create'),
     path('article_edit/<uuid:id>/', views_admin.article_edit, name='article_edit'),
     path('article/delete/<uuid:id>/', views_admin.article_delete, name='article_delete'),
+    path('topic/', views_admin.topic_list, name='topic_list'),
+    path('topic_create/', views_admin.topic_create, name='topic_create'),
+    path('topic/delete/<uuid:id>/', views_admin.topic_delete, name='topic_delete'),
+
     
 ]

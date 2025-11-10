@@ -6,8 +6,8 @@ from datetime import datetime
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import User
 from django.http import JsonResponse
-from .models import Page, Article
-from .forms_admin import formPageEdit, formPageCreate, formArticleCreate, formArticleEdit
+from .models import Page, Article, Topic
+from .forms_admin import formPageEdit, formPageCreate, formArticleCreate, formArticleEdit, formTopicCreate
 from uuid import UUID
 from .decorators_admin import admin_required, check_useradmin
 from django.utils import timezone
@@ -165,3 +165,55 @@ def page_delete(request, id):
         # If accessed via GET, redirect to list with error message
         messages.error(request, 'Metode tidak diizinkan untuk menghapus page.')
         return redirect('app:page_list')
+
+
+
+@check_useradmin
+@admin_required
+def topic_list(request):
+    topic = Topic.objects.all()
+    context = {
+        'topic': topic,
+        'title': 'Topik List',
+        'heading': 'Topik List',
+        'now': timezone.now(),
+    }
+    return render(request, 'admin_managed/topik_list.html', context)
+
+
+@check_useradmin
+@admin_required
+def topic_create(request):
+    if request.method == 'POST':
+        form = formTopicCreate(request.POST)
+        if form.is_valid():
+            page = form.save(commit=False)
+            page.author = request.user
+            page.save()
+            messages.success(request, 'Topic berhasil dibuat!')
+            return redirect('app:topic_list')
+        else:
+            messages.error(request, 'Terjadi kesalahan. Silakan periksa form Anda.')
+            print("Form errors:", form.errors)
+    else:
+        form = formTopicCreate()
+    
+    context = {
+        'form': form,
+        'title': 'Buat Page Baru',
+        'heading': 'Buat Page Baru',
+    }
+    return render(request, 'admin_managed/topik_create.html', context)
+
+@check_useradmin
+@admin_required
+def topic_delete(request, id):
+    topic = get_object_or_404(Topic, id=id)
+    if request.method == 'POST':
+        topic.delete()
+        messages.success(request, 'Topic berhasil dihapus!')
+        return redirect('app:topic_list')
+    else:
+        # If accessed via GET, redirect to list with error message
+        messages.error(request, 'Metode tidak diizinkan untuk menghapus page.')
+        return redirect('app:topic_list')

@@ -41,6 +41,9 @@
                     <li class="{% if title == 'Artikel List' %}active{% endif %}">
                         <a href="{% url 'app:article_list' %}"><i class="ri-file-list-line"></i>Artikel</a>
                     </li>
+                    <li class="{% if title == 'Topik List' %}active{% endif %}">
+                        <a href="{% url 'app:topic_list' %}"><i class="ri-book-mark-line"></i>Topik</a>
+                    </li>
                    <li class="{% if title == 'Page List' %}active{% endif %}">
                         <a href="{% url 'app:page_list' %}"><i class="ri-file-list-line"></i>Halaman</a>
                    </li>
