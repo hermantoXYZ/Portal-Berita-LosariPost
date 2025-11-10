@@ -2,35 +2,41 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from datetime import datetime
+from django.utils import timezone
 from app.models import Article, Category, Page, UserAnggota, Topic
 from django.db.models import Count, Q
 from django.utils.text import slugify
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
-tanggal_now = datetime.now().date()
+# tanggal_now = timezone.now()
 
 def custom_404(request, exception):
     return render(request, "home/404.html", status=404)
 
 def index(request):
-    all_articles = Article.objects.filter(status='published').order_by('-created_at')
-    headline_articles = Article.objects.filter(is_headline=True, status='published').order_by('-created_at')[:3]
-    makassar_raya_articles = Article.objects.filter(category__slug='makassar-raya', status='published').order_by('-created_at')[:4]
-    celebes_voice_articles = Article.objects.filter(category__slug='celebes-voice', status='published').order_by('-created_at')[:6]
-    hukum_articles = Article.objects.filter(category__slug='hukum', status='published').order_by('-created_at')[:6]
-    inspirasi_nusantara_articles = Article.objects.filter(category__slug='inspirasi-nusantara', status='published').order_by('-created_at')[:6]
-    lensa_budaya_articles = Article.objects.filter(category__slug='lensa-budaya', status='published').order_by('-created_at')[:6]
-    sport_hiburan_articles = Article.objects.filter(category__slug='sport-hiburan', status='published').order_by('-created_at')[:6]
-    teknologi_articles = Article.objects.filter(category__slug='teknologi', status='published').order_by('-created_at')[:6]
-    daerah_articles = Article.objects.filter(category__slug='daerah', status='published').order_by('-created_at')[:6]
-    politik = Article.objects.filter(category__slug='politik', status='published').order_by('-created_at')[:6]
-    news = Article.objects.filter(category__slug='news', status='published').order_by('-created_at')
-    popular_articles = Article.objects.filter(status='published').order_by('-views_count')[:7]
+
+    # filter_published = {'status': 'published', 'created_at__lte': tanggal_now}
+    all_articles = Article.objects.filter( status='published', created_at__lte=timezone.now() ).order_by('-created_at')
+    headline_articles = Article.objects.filter(is_headline=True, status='published', created_at__lte=timezone.now()).order_by('-created_at')[:6]
+    makassar_raya_articles = Article.objects.filter(category__slug='makassar-raya', status='published', created_at__lte=timezone.now()).order_by('-created_at')[:4]
+    celebes_voice_articles = Article.objects.filter(category__slug='celebes-voice', status='published', created_at__lte=timezone.now()).order_by('-created_at')[:6]
+    hukum_articles = Article.objects.filter(category__slug='hukum', status='published', created_at__lte=timezone.now()).order_by('-created_at')[:6]
+    inspirasi_nusantara_articles = Article.objects.filter(category__slug='inspirasi-nusantara', status='published', created_at__lte=timezone.now()).order_by('-created_at')[:6]
+    lensa_budaya_articles = Article.objects.filter(category__slug='lensa-budaya', status='published', created_at__lte=timezone.now()).order_by('-created_at')[:6]
+    sport_hiburan_articles = Article.objects.filter(category__slug='sport-hiburan', status='published', created_at__lte=timezone.now()).order_by('-created_at')[:6]
+    teknologi_articles = Article.objects.filter(category__slug='teknologi', status='published', created_at__lte=timezone.now()).order_by('-created_at')[:6]
+    daerah_articles = Article.objects.filter(category__slug='daerah', status='published', created_at__lte=timezone.now()).order_by('-created_at')[:6]
+    politik = Article.objects.filter(category__slug='politik', status='published', created_at__lte=timezone.now()).order_by('-created_at')[:6]
+    news = Article.objects.filter(category__slug='news', status='published', created_at__lte=timezone.now()).order_by('-created_at')
+    popular_articles = Article.objects.filter(status='published', created_at__lte=timezone.now()).order_by('-views_count')[:7]
     category_list_variabel = Category.objects.all()
     paginator = Paginator(all_articles, 6)
     page = request.GET.get('page')
+
+    print("Created at:", Article.objects.first().created_at)
+    print("Sekarang  :", timezone.now())
+
     
     try:
         articles = paginator.page(page)
@@ -64,13 +70,16 @@ def index(request):
 
 def article_detail(request, slug, category_slug, unique_id):
     article = get_object_or_404(Article, unique_id=unique_id, slug=slug, category__slug=category_slug)
+    if article.status != 'published' or article.created_at > timezone.now():
+        return render(request, 'home/404.html', status=404)
+
     category_list_variabel = Category.objects.all()
-    popular_articles = Article.objects.filter(status='published').order_by('-views_count')[:7]
+    popular_articles = Article.objects.filter(status='published', created_at__lte=timezone.now()).order_by('-views_count')[:7]
     article.views_count += 1
     article.save()
     category_list_variabel = Category.objects.annotate(article_count=Count('articles', filter=Q(articles__status='published')))
-    related_articles = Article.objects.filter( topic__in=article.topic.all(), status='published' ).exclude(id=article.id).distinct().order_by('-created_at')[:4]
-    latest_articles_variabel = Article.objects.filter(status='published').order_by('-created_at')[:6]
+    related_articles = Article.objects.filter( topic__in=article.topic.all(), status='published', created_at__lte=timezone.now() ).exclude(id=article.id).distinct().order_by('-created_at')[:4]
+    latest_articles_variabel = Article.objects.filter(status='published', created_at__lte=timezone.now()).order_by('-created_at')[:6]
     topics = article.topic.all()
     
     return render(request, 'home/article_detail.html', {'article': article, 'views': article.views_count, 'category_list': category_list_variabel, 'latest_articles': latest_articles_variabel, 'popular_articles': popular_articles, 'related_articles': related_articles, 'topics': topics})
@@ -127,19 +136,19 @@ def article_list(request):
 
 def category_articles(request, slug):
     category = get_object_or_404(Category, slug=slug)
-    articles = Article.objects.filter(category=category, status='published').order_by('-created_at')
-    makassar_raya_articles = Article.objects.filter(category__slug='makassar-raya', status='published').order_by('-created_at')[:4]
-    celebes_voice_articles = Article.objects.filter(category__slug='celebes-voice', status='published').order_by('-created_at')[:6]
-    hukum_articles = Article.objects.filter(category__slug='hukum', status='published').order_by('-created_at')[:6]
-    inspirasi_nusantara_articles = Article.objects.filter(category__slug='inspirasi-nusantara', status='published').order_by('-created_at')[:6]
-    lensa_budaya_articles = Article.objects.filter(category__slug='lensa-budaya', status='published').order_by('-created_at')[:6]
-    sport_hiburan_articles = Article.objects.filter(category__slug='sport-hiburan', status='published').order_by('-created_at')[:6]
-    teknologi_articles = Article.objects.filter(category__slug='teknologi', status='published').order_by('-created_at')[:6]
-    daerah_articles = Article.objects.filter(category__slug='daerah', status='published').order_by('-created_at')[:6]
-    politik = Article.objects.filter(category__slug='politik', status='published').order_by('-created_at')[:6]
-    news = Article.objects.filter(category__slug='news', status='published').order_by('-created_at')
-    popular_articles = Article.objects.filter(category=category, status='published').order_by('-views_count')[:3]
-    popular_article = Article.objects.filter(status='published').order_by('-views_count')[:7]
+    articles = Article.objects.filter(category=category, status='published', created_at__lte=timezone.now()).order_by('-created_at')
+    makassar_raya_articles = Article.objects.filter(category__slug='makassar-raya', status='published', created_at__lte=timezone.now()).order_by('-created_at')[:4]
+    celebes_voice_articles = Article.objects.filter(category__slug='celebes-voice', status='published', created_at__lte=timezone.now()).order_by('-created_at')[:6]
+    hukum_articles = Article.objects.filter(category__slug='hukum', status='published', created_at__lte=timezone.now()).order_by('-created_at')[:6]
+    inspirasi_nusantara_articles = Article.objects.filter(category__slug='inspirasi-nusantara', status='published', created_at__lte=timezone.now()).order_by('-created_at')[:6]
+    lensa_budaya_articles = Article.objects.filter(category__slug='lensa-budaya', status='published', created_at__lte=timezone.now()).order_by('-created_at')[:6]
+    sport_hiburan_articles = Article.objects.filter(category__slug='sport-hiburan', status='published', created_at__lte=timezone.now()).order_by('-created_at')[:6]
+    teknologi_articles = Article.objects.filter(category__slug='teknologi', status='published', created_at__lte=timezone.now()).order_by('-created_at')[:6]
+    daerah_articles = Article.objects.filter(category__slug='daerah', status='published', created_at__lte=timezone.now()).order_by('-created_at')[:6]
+    politik = Article.objects.filter(category__slug='politik', status='published', created_at__lte=timezone.now()).order_by('-created_at')[:6]
+    news = Article.objects.filter(category__slug='news', status='published', created_at__lte=timezone.now()).order_by('-created_at')
+    popular_articles = Article.objects.filter(category=category, status='published', created_at__lte=timezone.now()).order_by('-views_count')[:3]
+    popular_article = Article.objects.filter(status='published', created_at__lte=timezone.now()).order_by('-views_count')[:7]
 
     context = {
         'category': category,
@@ -167,17 +176,17 @@ def topic_articles(request, slug):
         topic=topic,
         status='published'
     ).order_by('-created_at')
-    popular_articles = Article.objects.filter(topic=topic, status='published').order_by('-views_count')[:3]
-    makassar_raya_articles = Article.objects.filter(category__slug='makassar-raya', status='published').order_by('-created_at')[:4]
-    celebes_voice_articles = Article.objects.filter(category__slug='celebes-voice', status='published').order_by('-created_at')[:6]
-    hukum_articles = Article.objects.filter(category__slug='hukum', status='published').order_by('-created_at')[:6]
-    inspirasi_nusantara_articles = Article.objects.filter(category__slug='inspirasi-nusantara', status='published').order_by('-created_at')[:6]
-    lensa_budaya_articles = Article.objects.filter(category__slug='lensa-budaya', status='published').order_by('-created_at')[:6]
-    sport_hiburan_articles = Article.objects.filter(category__slug='sport-hiburan', status='published').order_by('-created_at')[:6]
-    teknologi_articles = Article.objects.filter(category__slug='teknologi', status='published').order_by('-created_at')[:6]
-    daerah_articles = Article.objects.filter(category__slug='daerah', status='published').order_by('-created_at')[:6]
-    politik = Article.objects.filter(category__slug='politik', status='published').order_by('-created_at')[:6]
-    news = Article.objects.filter(category__slug='news', status='published').order_by('-created_at')
+    popular_articles = Article.objects.filter(topic=topic, status='published', created_at__lte=timezone.now()).order_by('-views_count')[:3]
+    makassar_raya_articles = Article.objects.filter(category__slug='makassar-raya', status='published', created_at__lte=timezone.now()).order_by('-created_at')[:4]
+    celebes_voice_articles = Article.objects.filter(category__slug='celebes-voice', status='published', created_at__lte=timezone.now()).order_by('-created_at')[:6]
+    hukum_articles = Article.objects.filter(category__slug='hukum', status='published', created_at__lte=timezone.now()).order_by('-created_at')[:6]
+    inspirasi_nusantara_articles = Article.objects.filter(category__slug='inspirasi-nusantara', status='published', created_at__lte=timezone.now()).order_by('-created_at')[:6]
+    lensa_budaya_articles = Article.objects.filter(category__slug='lensa-budaya', status='published', created_at__lte=timezone.now()).order_by('-created_at')[:6]
+    sport_hiburan_articles = Article.objects.filter(category__slug='sport-hiburan', status='published', created_at__lte=timezone.now()).order_by('-created_at')[:6]
+    teknologi_articles = Article.objects.filter(category__slug='teknologi', status='published', created_at__lte=timezone.now()).order_by('-created_at')[:6]
+    daerah_articles = Article.objects.filter(category__slug='daerah', status='published', created_at__lte=timezone.now()).order_by('-created_at')[:6]
+    politik = Article.objects.filter(category__slug='politik', status='published', created_at__lte=timezone.now()).order_by('-created_at')[:6]
+    news = Article.objects.filter(category__slug='news', status='published', created_at__lte=timezone.now()).order_by('-created_at')
 
     return render(request, 'home/topic_articles.html', {
         'topic': topic,
@@ -197,16 +206,9 @@ def topic_articles(request, slug):
 
 def page_detail(request, slug):
     page = get_object_or_404(Page, slug=slug)
-    articles = Article.objects.filter(status='published').order_by('-created_at')[:3]
-    latest_articles_variabel = Article.objects.filter(status='published').order_by('-created_at')[:3]
-    category_list_variabel = Category.objects.annotate(
-        article_count=Count('articles', filter=Q(articles__status='published'))
-    )
+
     context = {
         'page': page,
-        'articles': articles,
-        'latest_articles': latest_articles_variabel,
-        'category_list': category_list_variabel,
     }
     return render(request, 'home/page_detail.html', context)
 

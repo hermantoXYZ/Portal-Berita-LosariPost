@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', () => {
     const slides = document.querySelector('.slides');
     const prevBtn = document.querySelector('.prev-btn');
@@ -7,12 +6,21 @@ document.addEventListener('DOMContentLoaded', () => {
     if (slides && prevBtn && nextBtn) {
         const scrollAmount = slides.clientWidth;
 
-        nextBtn.addEventListener('click', () => {
+        // Fungsi scroll ke kanan
+        const scrollNext = () => {
             slides.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-        });
+        };
 
-        prevBtn.addEventListener('click', () => {
+        // Fungsi scroll ke kiri
+        const scrollPrev = () => {
             slides.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-        });
+        };
+
+        // Tombol manual
+        nextBtn.addEventListener('click', scrollNext);
+        prevBtn.addEventListener('click', scrollPrev);
+
+        // Scroll otomatis setiap 5 detik (5000 ms)
+        setInterval(scrollNext, 4000);
     }
 });

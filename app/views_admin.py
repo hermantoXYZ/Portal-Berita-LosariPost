@@ -10,6 +10,7 @@ from .models import Page, Article
 from .forms_admin import formPageEdit, formPageCreate, formArticleCreate, formArticleEdit
 from uuid import UUID
 from .decorators_admin import admin_required, check_useradmin
+from django.utils import timezone
 
 
 @check_useradmin
@@ -31,6 +32,7 @@ def article_list(request):
         'articles': articles,
         'title': 'Artikel List',
         'heading': 'Artikel List',
+        'now': timezone.now(),
     }
     return render(request, 'admin_managed/article_list.html', context)
 
