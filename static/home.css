@@ -601,3 +601,15 @@ footer {
 .twitter { background-color: #1da1f2; }
 .whatsapp { background-color: #25d366; }
 .telegram { background-color: #0088cc; }
+
+
+/* Banner Styles */
+.banner {
+    margin: 10px;
+    text-align: center;
+}
+
+.banner img {
+    max-width: 100%;
+    height: auto;
+}

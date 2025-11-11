@@ -125,6 +125,8 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+# ln -s /home/losh8327/losaripost/static /home/losh8327/public_html/static
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -134,7 +136,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Konfigurasi Media
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'  
-
+# ln -s /home/losh8327/losaripost/media /home/losh8327/public_html/media
 # ln -s /home/esuh2918/bisdig/media /home/esuh2918/public_html/bisdig.feb.unm.ac.id/media
 
 LOGOUT_REDIRECT_URL = '/login'
